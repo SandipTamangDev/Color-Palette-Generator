@@ -65,8 +65,8 @@ document.getElementById() / document.querySelector()
 const colorCode = [1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F"];
 const colorGenerateBtn = document.getElementById('color-generator');
 let generatedColor;
+const colorBox = document.querySelectorAll('.color-box');
 
-console.log(generatedColor);
 function colorGenerator () {
     generatedColor = "#";
     for (let i = 1; i <=6; i++) {
@@ -80,13 +80,24 @@ function colorGenerator () {
 function colorGiver () {
     const colorBox = document.querySelectorAll('.color-box');
     colorBox.forEach(box => {
-        box.style.backgroundColor = colorGenerator();
-    })
+        box.addEventListener('click', () => {
+            box.style.backgroundColor = colorGenerator(); 
+        })
+        box.style.backgroundColor = colorGenerator(); 
+        // colorBox.addEventListener('click', colorGenerator)
+    });
 }
+
+
+
+// function colorGiverForOne () {
+//     box.style.backgroundColor = colorGenerator()
+// }
+
 
 colorGiver()
 colorGenerateBtn.addEventListener('click', colorGiver);
-
+// colorBox.addEventListener('click', colorGiverForOne);
 
 
 

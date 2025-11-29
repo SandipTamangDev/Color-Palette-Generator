@@ -52,52 +52,94 @@ document.getElementById() / document.querySelector()
 // const colorBox5 = document.getElementById('color-box5');
 
 
-    // colorBox1.style.backgroundColor = colorGenerator();
+// colorBox1.style.backgroundColor = colorGenerator();
 
-    // colorBox2.style.backgroundColor = colorGenerator();
+// colorBox2.style.backgroundColor = colorGenerator();
 
-    // colorBox3.style.backgroundColor = colorGenerator();
+// colorBox3.style.backgroundColor = colorGenerator();
 
-    // colorBox4.style.backgroundColor = colorGenerator();
+// colorBox4.style.backgroundColor = colorGenerator();
 
-    // colorBox5.style.backgroundColor = colorGenerator();
+// colorBox5.style.backgroundColor = colorGenerator();
 
 const colorCode = [1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F"];
 const colorGenerateBtn = document.getElementById('color-generator');
-let generatedColor;
+let hexGeneratedColor;
+let rgbGeneratedColor;
 const colorBox = document.querySelectorAll('.color-box');
+const hueUser = document.getElementById('hue');
+const popupHls = document.getElementById('popup_article');
+const closeBtn = document.getElementById('popup_article_close_button');
+const hslSettingBtn = document.getElementById('hls_settings');
+let rgb;
+hue = 0;
 
-function colorGenerator () {
-    generatedColor = "#";
-    for (let i = 1; i <=6; i++) {
+popupHls.classList.remove('show');
+popupHls.classList.add('hidden');
+
+
+hslSettingBtn.addEventListener('click', () => {
+    popupHls.classList.add('show');
+    popupHls.classList.remove('hidden');
+});
+
+closeBtn.addEventListener('click', () => {
+    popupHls.classList.remove('show');
+    popupHls.classList.add('hidden');
+});
+
+function hexColorGenerator () {
+    hexGeneratedColor = "#";
+    for (let i = 1; i <= 6; i++) {
         const value = colorCode[Math.floor(Math.random() * colorCode.length )]
-        generatedColor += value;
+        hexGeneratedColor += value;
     }
-    return generatedColor;
+    return hexGeneratedColor;
 }
+
+function rgbColorGenerator () {
+
+    // for (let i = 1; i <= 5; i++ ) {
+        const rgbColor = hexColorGenerator();
+        const rgbColor2 = rgbColor.replace("#", "");
+
+        const r = parseInt(rgbColor2.slice(0, 2), 16);
+        const g = parseInt(rgbColor2.slice(2, 4), 16);
+        const b = parseInt(rgbColor2.slice(4, 6), 16);
+
+        rgb = `rgb(${r}, ${g}, ${b})`
+    // }
+    return rgb;
+    // console.log(r, g, b);
+    // return hexGeneratedColor.replace("#", "");
+}
+
+// function hlsToRgbGenerator() {
+//     hueValue = hueUser.textContent;
+//     console.log(hueValue);
+// }
+
+// console.log(hueValue);
+// console.log(rgbColorGenerator());
+
+// const result = hexGeneratedColor;
+// console.log(result);
+
+
 
 
 function colorGiver () {
     const colorBox = document.querySelectorAll('.color-box');
     colorBox.forEach(box => {
         box.addEventListener('click', () => {
-            box.style.backgroundColor = colorGenerator(); 
+            box.style.backgroundColor = rgbColorGenerator(); 
         })
-        box.style.backgroundColor = colorGenerator(); 
-        // colorBox.addEventListener('click', colorGenerator)
+        box.style.backgroundColor = rgbColorGenerator(); 
     });
 }
 
-
-
-// function colorGiverForOne () {
-//     box.style.backgroundColor = colorGenerator()
-// }
-
-
 colorGiver()
 colorGenerateBtn.addEventListener('click', colorGiver);
-// colorBox.addEventListener('click', colorGiverForOne);
 
 
 

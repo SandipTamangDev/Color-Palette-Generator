@@ -62,33 +62,39 @@ document.getElementById() / document.querySelector()
 
 // colorBox5.style.backgroundColor = colorGenerator();
 
+// popupHls.classList.remove('show');
+// popupHls.classList.add('hidden');
+
+// hslSettingBtn.addEventListener('click', () => {
+//     popupHls.classList.add('show');
+//     popupHls.classList.remove('hidden');
+// });
+
+// closeBtn.addEventListener('click', () => {
+//     popupHls.classList.remove('show');
+//     popupHls.classList.add('hidden');
+// });
+
 const colorCode = [1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F"];
-const colorGenerateBtn = document.getElementById('color-generator');
+const trueRandomBtn = document.getElementById('true-random');
 let hexGeneratedColor;
 let rgbGeneratedColor;
 const colorBox = document.querySelectorAll('.color-box');
 const hueUser = document.getElementById('hue');
-const popupHls = document.getElementById('popup_article');
-const closeBtn = document.getElementById('popup_article_close_button');
-const hslSettingBtn = document.getElementById('hls_settings');
-let rgb;
-hue = 0;
-
-popupHls.classList.remove('show');
-popupHls.classList.add('hidden');
+const hlsBtn = document.getElementById('hsl-harmony');
 
 
-hslSettingBtn.addEventListener('click', () => {
-    popupHls.classList.add('show');
-    popupHls.classList.remove('hidden');
-});
 
-closeBtn.addEventListener('click', () => {
-    popupHls.classList.remove('show');
-    popupHls.classList.add('hidden');
-});
 
-function hexColorGenerator () {
+function showPopup ()  {
+    const hslSettingBtn = document.getElementById('hls_settings');
+    const popupHls = document.getElementById('popup_article');
+    hslSettingBtn.addEventListener('click', () => {
+        popupHls.classList.toggle('active');
+    });
+}
+
+function hexColorGenerator() {
     hexGeneratedColor = "#";
     for (let i = 1; i <= 6; i++) {
         const value = colorCode[Math.floor(Math.random() * colorCode.length )]
@@ -97,49 +103,81 @@ function hexColorGenerator () {
     return hexGeneratedColor;
 }
 
-function rgbColorGenerator () {
+function rgbColorGenerator() {
+    let rgb;
+    const rgbColor = hexColorGenerator();
+    const rgbColor2 = rgbColor.replace("#", "");
 
-    // for (let i = 1; i <= 5; i++ ) {
-        const rgbColor = hexColorGenerator();
-        const rgbColor2 = rgbColor.replace("#", "");
+    const r = parseInt(rgbColor2.slice(0, 2), 16);
+    const g = parseInt(rgbColor2.slice(2, 4), 16);
+    const b = parseInt(rgbColor2.slice(4, 6), 16);
 
-        const r = parseInt(rgbColor2.slice(0, 2), 16);
-        const g = parseInt(rgbColor2.slice(2, 4), 16);
-        const b = parseInt(rgbColor2.slice(4, 6), 16);
-
-        rgb = `rgb(${r}, ${g}, ${b})`
-    // }
+    rgb = `rgb(${r}, ${g}, ${b})`;
     return rgb;
-    // console.log(r, g, b);
-    // return hexGeneratedColor.replace("#", "");
 }
 
-// function hlsToRgbGenerator() {
-//     hueValue = hueUser.textContent;
-//     console.log(hueValue);
-// }
+function hlsColorGenerator() {
+    const addHslBtn = document.getElementById('add-hsl');
+    // addHslBtn.addEventListener('click', () =>{
 
-// console.log(hueValue);
-// console.log(rgbColorGenerator());
+    // });
+    let h = Number(document.getElementById('hue').value) || Math.random() * 360;
+    let s = Number(document.getElementById('saturation').value) || Math.random() * 100;
+    let l = Number(document.getElementById('lightness').value) || Math.random() * 100;
 
-// const result = hexGeneratedColor;
-// console.log(result);
+    // console.log(h, s, l);
 
+    return `hsl(${h}, ${s}%, ${l}%)`;
+    // return hsl;
 
+}
 
-
-function colorGiver () {
+function rgbColorGiver() {
     const colorBox = document.querySelectorAll('.color-box');
     colorBox.forEach(box => {
         box.addEventListener('click', () => {
-            box.style.backgroundColor = rgbColorGenerator(); 
-        })
-        box.style.backgroundColor = rgbColorGenerator(); 
+            box.style.backgroundColor = rgbColorGenerator();
+        });
+        box.style.backgroundColor = rgbColorGenerator() 
     });
 }
 
-colorGiver()
-colorGenerateBtn.addEventListener('click', colorGiver);
+function hlsColorGiver() {
+    const colorBox = document.querySelectorAll('.color-box');
+    colorBox.forEach(box => {
+        // box.addEventListener('click', () => {
+        //     box.style.backgroundColor = hlsColorGenerator();
+        // });
+        box.style.backgroundColor = hlsColorGenerator();
+    });
+}
+
+showPopup()
+rgbColorGiver()
+
+trueRandomBtn.addEventListener('click', rgbColorGiver);
+hlsBtn.addEventListener('click', hlsColorGiver);
+
+// trueRandomBtn.addEventListener('click', () => {
+//     hlsColorGiver.remove();
+//     rgbColorGiver
+// });
+// hlsBtn.addEventListener('click', () => {
+//     rgbColorGiver.remove();
+//     hlsColorGiver;
+// });
+
+// trueRandomBtn.addEventListener('click', () => {
+//     hlsColorGiver.style.display = 'none';
+//     rgbColorGiver.style.display = 'block';
+// });
+
+// hlsBtn.addEventListener('click', () => {
+//     rgbColorGiver.style.display = 'none';
+//     hlsColorGiver.style.display = 'block';
+// });
+
+// console.log("")
 
 
 
